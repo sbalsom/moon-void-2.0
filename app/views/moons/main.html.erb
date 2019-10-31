@@ -52,6 +52,8 @@
   return `${day} ${monthNames[monthIndex]} ${year} at ${hour}:${minutes}`;
 }
   setTimeZone(offsetHours);
+
+  const voidBox = document.querySelector('.void-message')
   const c = document.querySelector('.schedule')
   const table = new DOMParser().parseFromString(c.innerText, 'text/html');
   const rows = table.getElementsByTagName('tr')
@@ -89,17 +91,19 @@
     let begin = new Date(beginString)
     let end = new Date(endString)
     let now = new Date()
+    console.log(`now is ${now}`);
+    console.log(`begin is ${begin}`);
+    console.log(`end is ${end}`);
+    console.log(now >= begin && now < end)
 
-    if (now >= begin && now < end) {
-      currentSign = row[0]['beginVocSign']
-      document.querySelector('.void-message').innerText = 'Yup.'
-    } else if (now < begin && nextBegin === 'unset') {
+    if (now < begin && nextBegin === 'unset' && voidBox.innerText !== 'Yup.') {
       nextBegin = begin
       // this might be wrong but we will check it
       currentSign = row[0]['beginVocSign']
-      document.querySelector('.void-message').innerText = 'Nope.'
+      voidBox.innerText = 'Nope.'
       document.querySelector('.next-void-message').innerText = `Moon will be void on ${formatDate(nextBegin)} local time`
     }
+
   })
   i = cal.length - 1
   for (cal.length - 1; i > 0; i--) {
@@ -109,11 +113,18 @@
     let end = new Date(endString)
     let now = new Date()
 
-    if (now > end && lastEnd === 'unset') {
+    if (now > end && lastEnd === 'unset' && voidBox.innerText !== 'Yup.') {
       currentSign = cal[i][1]['endVocSign']
       lastEnd = end
-      document.querySelector('.void-message').innerText = 'Nope.'
+      voidBox.innerText = 'Nope.'
     }
+
+
+    if (now >= begin && now < end) {
+      currentSign = cal[i][0]['beginVocSign']
+      voidBox.innerText = 'Yup.'
+    }
+
   }
 
   const el = document.querySelector('.ingresses').innerText
