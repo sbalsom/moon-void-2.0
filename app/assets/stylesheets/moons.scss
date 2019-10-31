@@ -1,0 +1,40 @@
+// Place all the styles related to the moons controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+@import url('https://fonts.googleapis.com/css?family=Lekton&display=swap');
+
+.hidden {
+  display: none;
+}
+
+body {
+  background-color: rgba(79, 92, 173, 1.00);
+  color: white;
+  font-family: 'Lekton', sans-serif;
+  padding: 0;
+}
+.site-container {
+  padding:80px;
+}
+
+h1, h2, h3 {
+  text-align: center;
+}
+
+h2 {
+  font-size: 100px;
+}
+
+.moon-image {
+  background: url(asset_path('moon.png'));
+  height: 700px;
+  width: 100vw;
+  background-position:top;
+  background-repeat: no-repeat;
+}
+
+.hidden {
+  display: none;
+}

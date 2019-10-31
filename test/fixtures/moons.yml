@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  void: false
+  ingressed: false
+  date: 2019-10-29
+  utc_offset: 1
+  sign: MyString
+  next_sign: MyString
+  next_ingress: 2019-10-29
+
+two:
+  void: false
+  ingressed: false
+  date: 2019-10-29
+  utc_offset: 1
+  sign: MyString
+  next_sign: MyString
+  next_ingress: 2019-10-29
