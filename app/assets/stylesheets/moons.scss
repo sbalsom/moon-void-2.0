@@ -16,11 +16,11 @@ body {
   padding: 0;
   margin:0;
   // in a media query for iphone:
-  // position: relative;
-  // height: 100vh;
 }
-.site-container {
-  padding:80px;
+
+
+.site-wrapper {
+  min-height: 100vh;
 }
 
 h1, h2, h3 {
@@ -38,10 +38,31 @@ h2 {
   background-position:top;
   background-repeat: no-repeat;
   // in a media query for iphone:
-  // position: absolute;
-  // bottom: 0;
 }
 
 .hidden {
   display: none;
+}
+
+@media only screen and (min-device-width : 375px) and (max-device-width : 667px) and (orientation : portrait) {
+
+  .moon-image {
+    position: absolute;
+    bottom: 0;
+  }
+  .site-container {
+    padding:80px;
+    position: relative;
+  }
+}
+
+@media only screen and (min-device-width : 375px) and (max-device-width : 812px) and (-webkit-device-pixel-ratio : 3) and (orientation : landscape) {
+  .moon-image {
+    position: absolute;
+    bottom: 0;
+  }
+  .site-container {
+    padding:80px;
+    position: relative;
+  }
 }

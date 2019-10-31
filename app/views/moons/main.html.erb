@@ -1,24 +1,25 @@
-<h4>Current UTC Offset: <span class="timezone-display"></span></h4>
-<div class="site-container">
+<div class="site-wrapper">
+  <h4>Current UTC Offset: <span class="timezone-display"></span></h4>
+  <div class="site-container">
 
-  <h1>Is the Moon void of course ?</h1>
-  <h2 class="void-message">nope.</h2>
-  <h3 class="next-void-message">moin was/will be void on date</h3>
-  <h3 class="sign-message">moon is in sign</h3>
-  <div class="schedule hidden"><%= @schedule %></div>
-  <% @ingresses %>
-  <% ingresses = @ingresses.children.map {|child| child.text.split(/\s{2}/)} %>
-  <% ingresses.shift  %>
-  <% ingresses = ingresses.map {|array| array.join('***')} %>
-  <% ingresses.join("$$$") %>
+    <h1>Is the Moon void of course ?</h1>
+    <h2 class="void-message">nope.</h2>
+    <h3 class="next-void-message">moin was/will be void on date</h3>
+    <h3 class="sign-message">moon is in sign</h3>
+    <div class="schedule hidden"><%= @schedule %></div>
+    <% @ingresses %>
+    <% ingresses = @ingresses.children.map {|child| child.text.split(/\s{2}/)} %>
+    <% ingresses.shift  %>
+    <% ingresses = ingresses.map {|array| array.join('***')} %>
+    <% ingresses.join("$$$") %>
 
-  <div class="ingresses hidden"><%= ingresses.join("$$$") %></div>
+    <div class="ingresses hidden"><%= ingresses.join("$$$") %></div>
 
-  </div>
-  <div class="moon-image" >
+    </div>
+    <div class="moon-image" >
+    </div>
   </div>
 </div>
-
 
 <script type="module">
 
