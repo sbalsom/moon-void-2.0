@@ -1,2 +1,0 @@
-class Moon < ApplicationRecord
-end
