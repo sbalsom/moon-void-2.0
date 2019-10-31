@@ -99,10 +99,9 @@
 
     if (now < begin && nextBegin === 'unset' && voidBox.innerText !== 'Yup.') {
       nextBegin = begin
-      // this might be wrong but we will check it
       currentSign = row[0]['beginVocSign']
       voidBox.innerText = 'Nope.'
-      document.querySelector('.next-void-message').innerText = `Moon will be void on ${formatDate(nextBegin)} local time`
+      document.querySelector('.next-void-message').innerText = `Moon will be void on ${formatDate(nextBegin)} local time.`
     }
 
   })
@@ -124,8 +123,14 @@
     if (now >= begin && now < end) {
       currentSign = cal[i][0]['beginVocSign']
       voidBox.innerText = 'Yup.'
-    }
+      let d = new Date(cal[i][0]['beginVocDate'] + " " + cal[i][0]['beginVocTime'] + "+00:00")
 
+      console.log(formatDate(d))
+      document.querySelector('.next-void-message').innerText = `Moon turned void on ${formatDate(d)} local time.`
+       let e = new Date(cal[i][1]['endVocDate'] + " " + cal[i][1]['endVocTime'] + "+00:00")
+
+    document.querySelector('.next-void-message').insertAdjacentHTML('afterend', `<h3>Void ends on ${formatDate(e)} local time.</h3>`)
+    }
   }
 
   const el = document.querySelector('.ingresses').innerText
