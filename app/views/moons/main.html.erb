@@ -13,10 +13,8 @@
     <% ingresses.join("$$$") %>
 
     <div class="ingresses hidden"><%= ingresses.join("$$$") %></div>
-
     </div>
     <div class="moon-image" >
-    </div>
   </div>
 </div>
 
@@ -35,6 +33,7 @@
       timeZoneDisplay.innerText = `+00:00`
     }
   }
+
   function formatDate(date) {
   var monthNames = [
     "January", "February", "March",
@@ -42,6 +41,7 @@
     "August", "September", "October",
     "November", "December"
   ];
+
 
   var day = date.getDate();
   var monthIndex = date.getMonth();
@@ -61,7 +61,11 @@
   let group = {}
   let row = {}
   let i = 0
+
   for (i = 1; i < rows.length - 1; i++) {
+    if (i == 1 && rows[i].innerText.match(/Moon\sEnters/)) {
+      continue;
+    }
     if (rows[i].innerText.match(/Moon\sBegins/)) {
       row = {}
       row['beginVocDate'] = rows[i].children[0].innerText
@@ -84,6 +88,19 @@
   let nextBegin = 'unset'
   let currentSign = ''
   cal.forEach((row, index) => {
+    function findLastSign(sign) {
+      var signNames = [
+      "Aries", "Taurus", "Gemini",
+      "Cancer", "Leo", "Virgo", "Libra",
+      "Scorpio", "Sagittarius", "Capricorn",
+      "Aquarius", "Pisces"
+      ]
+      if (sign === "Aries") {
+        return "Pisces"
+      } else {
+        return signNames[signNames.indexOf(sign) - 1]
+      }
+  }
     let beginString = row['begin']['beginVocDate'] + ' ' + row['begin']['beginVocTime'] + " UTC"
 
     let endString = row['end']['endVocDate'] + ' ' + row['end']['endVocTime'] + " UTC"
@@ -92,7 +109,7 @@
     let now = new Date()
     if (now < begin && nextBegin === 'unset' && voidBox.innerText !== 'Yup.') {
       nextBegin = begin
-      currentSign = row['begin']['beginVocSign']
+      currentSign = findLastSign(row['begin']['beginVocSign'])
       voidBox.innerText = 'Nope.'
       document.querySelector('.next-void-message').innerText = `Moon will be void on ${formatDate(nextBegin)} local time.`
     }
@@ -104,7 +121,6 @@
     let begin = new Date(beginString)
     let end = new Date(endString)
     let now = new Date()
-
     if (now > end && lastEnd === 'unset' && voidBox.innerText !== 'Yup.') {
       currentSign = cal[i]['end']['endVocSign']
       lastEnd = end
@@ -135,12 +151,11 @@
   let now = new Date()
     if (d.getMonth() === now.getMonth() && d.getDate() === now.getDate()) {
       if (now < d) {
-        // what was i doing here? and why is it empty?
-      } else if (now >= d) {
-        // what was i doing here? and why is it empty?
-
+        // it is not ingressed sign stays the same
+      } else if (now >= d ) {
+        // moon has ingressed, change the sign
+        currentSign = r[1].trim().replace(/Moon\senters/, '').trim()
       }
-      currentSign = r[1].trim().replace(/Moon\senters/, '').trim()
     }
   })
   document.querySelector('.sign-message').innerText = `Moon is in ${currentSign}`
