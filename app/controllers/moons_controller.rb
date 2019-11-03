@@ -3,15 +3,32 @@ require 'open-uri'
 
 class MoonsController < ApplicationController
   def main
-    url = 'https://www.moontracks.com/void_of_course_moon_dates.html'
-    file = open(url)
-    doc = Nokogiri::HTML(file)
-    @schedule = doc.search("table[style='margin-left:auto; margin-right:auto;width:370px;']")
-    other_url = 'https://www.moontracks.com/lunar_ingress.html'
-    html = open(other_url)
-    doc_two = Nokogiri::HTML(html)
-    @ingresses = doc_two.search('table')[2]
+    @schedule = find_schedule
+    @ingresses = find_ingresses
+    @aspects = find_aspects
+  end
 
+  private
+
+  def find_schedule
+    void_url = 'https://www.moontracks.com/void_of_course_moon_dates.html'
+    html = open(void_url)
+    doc = Nokogiri::HTML(html)
+    doc.search("table[style='margin-left:auto; margin-right:auto;width:370px;']")
+  end
+
+  def find_ingresses
+    ingress_url = 'https://www.moontracks.com/lunar_ingress.html'
+    html = open(ingress_url)
+    doc = Nokogiri::HTML(html)
+    doc.search('table')[2]
+  end
+
+  def find_aspects
+    aspect_url = 'https://astroelite.com/cgi-bin/dispatch.exe?rep=peph&Lng=0'
+    html = open(aspect_url)
+    doc = Nokogiri::HTML(html)
+    doc.search('.Treb table:contains("Void Moon periods")')
   end
 end
 

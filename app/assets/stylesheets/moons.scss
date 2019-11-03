@@ -23,7 +23,7 @@ body {
   min-height: 100vh;
 }
 
-h1, h2, h3 {
+h1, h2, h3, h4 {
   text-align: center;
 }
 
@@ -35,13 +35,15 @@ h4 {
   padding-left: 10px;
 }
 
+#utc-text {
+  text-align: left;
+}
 .moon-image {
   background: url(asset_path('moon.png'));
   height: 700px;
   width: 100vw;
   background-position:top;
   background-repeat: no-repeat;
-  // in a media query for iphone:
 }
 
 .hidden {
