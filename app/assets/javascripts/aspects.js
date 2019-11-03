@@ -42,7 +42,7 @@ function planetSymbol(p) {
   const chart = new DOMParser().parseFromString(a.innerText, 'text/html');
   const aspects = chart.getElementsByTagName('tr')
   const aspectBox = document.querySelector('.aspect-message')
-  i = 2
+ let  i = 2
   for (i = 2; i < aspects.length; i++) {
     let aspectData =  aspects[i].innerText.trim().split('\n')
     let now = new Date()
