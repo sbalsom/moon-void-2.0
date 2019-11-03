@@ -4,16 +4,9 @@
     <h1>Is the Moon void of course ?</h1>
     <h2 class="void-message"></h2>
     <h3 class="next-void-message"></h3>
-    <h3 class="sign-message"></h3>
+    <h3 class="sign-message">Moon is in <%= @moon %></h3>
     <h4 class="aspect-message"></h4>
     <div class="schedule hidden"><%= @schedule %></div>
-    <% @ingresses %>
-    <% ingresses = @ingresses.children.map {|child| child.text.split(/\s{2}/)} %>
-    <% ingresses.shift  %>
-    <% ingresses = ingresses.map {|array| array.join('***')} %>
-    <% ingresses.join("$$$") %>
-
-    <div class="ingresses hidden"><%= ingresses.join("$$$") %></div>
     </div>
     <div class="aspects hidden"><%= @aspects %></div>
     <div class="moon-image" >

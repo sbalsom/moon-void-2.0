@@ -6,9 +6,17 @@ class MoonsController < ApplicationController
     @schedule = find_schedule
     @ingresses = find_ingresses
     @aspects = find_aspects
+    @moon = find_moon
   end
 
   private
+
+  def find_moon
+    moon_url = 'https://www.lunarliving.org/'
+    html = open(moon_url)
+    doc = Nokogiri::HTML(html)
+    doc.search('.moon').search('b').text
+  end
 
   def find_schedule
     void_url = 'https://www.moontracks.com/void_of_course_moon_dates.html'
