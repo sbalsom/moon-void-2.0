@@ -80,7 +80,7 @@ let i = 0
     }
   })
   i = cal.length - 1
-  for (cal.length - 1; i > 0; i--) {
+  for (cal.length - 1; i >= 0; i--) {
     let beginString = cal[i]['begin']['beginVocDate'] + ' ' + cal[i]['begin']['beginVocTime'] + " UTC"
     let endString = cal[i]['end']['endVocDate'] + ' ' + cal[i]['end']['endVocTime'] + " UTC"
     let begin = new Date(beginString)
@@ -92,8 +92,7 @@ let i = 0
       voidBox.innerText = 'Nope.'
     }
 
-
-    if (now >= begin && now < end) {
+    if (now > begin && now < end) {
       currentSign = cal[i]['begin']['beginVocSign']
       voidBox.innerText = 'Yup.'
       let d = new Date(cal[i]['begin']['beginVocDate'] + " " + cal[i]['begin']['beginVocTime'] + "+00:00")
