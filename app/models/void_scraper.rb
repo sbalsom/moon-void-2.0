@@ -10,6 +10,7 @@ class VoidScraper < ApplicationRecord
     table = doc.search('table:contains("Void of Course Schedule")')
     find_aspects
     parse_schedule(table)
+    return "done"
   end
 
   def parse_schedule(table)

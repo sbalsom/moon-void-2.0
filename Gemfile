@@ -24,8 +24,15 @@ gem 'jbuilder', '~> 2.5'
 # gem 'redis', '~> 4.0'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
-  gem 'pg', '~> 0.18.4'
+gem 'pg', '~> 0.18.4'
 
+# devise for sidekiq login
+gem 'devise'
+gem 'sidekiq'
+gem 'sidekiq-failures', '~> 1.0'
+gem 'sinatra', '>= 2.0.0.beta2', require: false
+gem 'sidekiq-status'
+gem 'redis-namespace'
 # js libraries
 
 # Use ActiveStorage variant
@@ -38,8 +45,6 @@ gem 'jbuilder', '~> 2.5'
 gem 'bootsnap', '>= 1.1.0', require: false
 
 group :development, :test do
-  # gem 'sqlite3', '~> 1.3', '>= 1.3.11'
-
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
 end
@@ -59,10 +64,6 @@ group :test do
   gem 'selenium-webdriver'
   # Easy installation and use of chromedriver to run system tests with Chrome
   gem 'chromedriver-helper'
-end
-
-group :production do
-  gem 'pg', '~> 0.18.4'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
