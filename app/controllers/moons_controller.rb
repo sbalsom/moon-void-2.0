@@ -4,9 +4,13 @@ require 'open-uri'
 class MoonsController < ApplicationController
   def main
     @schedule = find_schedule
+
     # @aspects = find_aspects
     # @void = Void.all.find { |v| v.begin <}
     @void = Void.where('voids.begin <= ? and voids.end > ?', Time.now, Time.now).first
+    @next_void = Void.where('voids.begin > ?', Time.now)
+                     .order(begin: :asc)
+                     .first
     @moon = find_moon
   end
 

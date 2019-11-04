@@ -11,7 +11,7 @@
   <% end %>
 <% else %>
 <h2>Nope.</h2>
-<h3>Moon will be void on</h3>
+<h3>Moon will be void on <%= @next_void.begin.strftime("%B %e at %H:%M") %> UTC</h3>
 <% end %>
     <h3 class="sign-message">Moon is in <%= @moon %></h3>
 
