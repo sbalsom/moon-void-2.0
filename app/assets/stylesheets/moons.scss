@@ -9,6 +9,21 @@
   display: none;
 }
 
+.flex {
+  display: flex;
+  justify-content: space-between;
+}
+
+a {
+  color: white;
+  font-family: 'Lekton', sans-serif;
+  text-decoration: none;
+  padding: 10px;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
 body {
   background-color: rgba(79, 92, 173, 1.00);
   color: white;

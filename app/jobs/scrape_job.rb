@@ -1,4 +1,5 @@
 class ScrapeJob < ApplicationJob
+
   queue_as :moon
 
   after_perform do |job|
