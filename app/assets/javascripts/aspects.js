@@ -16,8 +16,8 @@ function planetSymbol(p) {
   function aspectSymbol(d) {
     switch (d) {
       case 0: return "☌"
-      case 30: return ""
-      case 60: return "*"
+      case 30: return "semisextile"
+      case 60: return "sextile"
       case 90: return "☐"
       case 120: return "△"
       case 180: return "☍"

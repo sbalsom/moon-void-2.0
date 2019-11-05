@@ -11,7 +11,12 @@ function formatDate(date) {
   var year = date.getFullYear();
   var hour = date.getHours();
   var minutes = date.getMinutes();
-
+  if (minutes < 10) {
+    minutes = `0${minutes}`
+  }
+  if (hour < 10) {
+    hour = `0${hour}`
+  }
   return `${day} ${monthNames[monthIndex]} ${year} at ${hour}:${minutes}`;
 }
 
@@ -80,7 +85,7 @@ let i = 0
 
       document.querySelector('.next-void-message').innerText = `Moon turned void on ${formatDate(d)} local time.`
        let e = new Date(cal[i]['end']['endVocDate'] + " " + cal[i]['end']['endVocTime'] + "+00:00")
-
+       console.log(e)
     document.querySelector('.next-void-message').insertAdjacentHTML('afterend', `<h3>Void ends on ${formatDate(e)} local time.</h3>`)
     }
 

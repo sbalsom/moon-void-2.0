@@ -10,18 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_29_221013) do
+ActiveRecord::Schema.define(version: 2019_11_03_161837) do
 
-  create_table "moons", force: :cascade do |t|
-    t.boolean "void"
-    t.boolean "ingressed"
-    t.date "date"
-    t.integer "utc_offset"
-    t.string "sign"
-    t.string "next_sign"
-    t.date "next_ingress"
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "void_scrapers", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "voids", force: :cascade do |t|
+    t.datetime "begin"
+    t.datetime "end"
+    t.string "begin_sign"
+    t.string "end_sign"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "last_sep"
   end
 
 end
