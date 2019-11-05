@@ -3,7 +3,7 @@ class ScrapeJob < ApplicationJob
   queue_as :moon
 
   after_perform do |job|
-    self.class.set(:wait => 1.week).perform_later
+    self.class.set(:wait => 1.minute).perform_now
   end
 
   def perform
