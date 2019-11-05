@@ -2,6 +2,7 @@ class ScrapeJob < ApplicationJob
   queue_as :moon
 
   after_perform do |job|
+    NotificationMailer.report.deliver_now
     self.class.set(wait: 1.week).perform_later
   end
 

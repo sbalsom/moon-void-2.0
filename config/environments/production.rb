@@ -2,7 +2,8 @@ Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
   # sidekiq setup
-  config.action_mailer.default_url_options = { host: 'http://www.isthemoonvoid.com/' }
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.default_url_options = { host: 'www.isthemoonvoid.com' }
   # Code is not reloaded between requests.
   config.cache_classes = true
 
