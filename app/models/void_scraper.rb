@@ -2,7 +2,6 @@ require 'nokogiri'
 require 'open-uri'
 
 class VoidScraper < ApplicationRecord
-
   def find_schedule
     void_url = 'https://www.moontracks.com/void_of_course_moon_dates.html'
     html = open(void_url)
@@ -15,7 +14,6 @@ class VoidScraper < ApplicationRecord
 
   def parse_schedule(table)
     rows = table.search('tr')
-
     rows.each_with_index do |row, index|
       next if row.text.length > 100
       next unless row.text =~ /Moon\sBegins/
@@ -41,7 +39,7 @@ class VoidScraper < ApplicationRecord
     rows.each do |row|
       next if row.text =~ /(Start|Void\sMoon\speriods)/
 
-      aspect = Aspect.find_or_create_by(
+      Aspect.find_or_create_by(
         begin_void: Time.parse(row.search('td')[0].text + " UTC"),
         degree: find_degree(row.search('td')[1].text),
         formatted_degree: format_degree(find_degree(row.search('td')[1].text)),
@@ -85,144 +83,4 @@ class VoidScraper < ApplicationRecord
     when 'Neptune' then planets[8]
     end
   end
-
 end
-
-# aspect[:begin_void] = Time.parse(row.search('td')[0].text + " UTC")
-      # aspect[:degree] = find_degree(row.search('td')[1].text)
-      # aspect[:formatted_degree] = format_degree(aspect[:degree])
-      # aspect[:planet] = find_planet(row.search('td')[1].text)
-      # aspect[:formatted_planet] = format_planet(aspect[:planet])
-      # aspect[:end_void] = Time.parse(row.search('td')[2].text + " UTC")
-# function planetSymbol(p) {
-#     const planets = ['♃', '♄', '♅', '☿', '♇', '♀︎', '♂︎', '☉', '♆']
-#     switch (p) {
-#       case "Jupiter": return planets[0]
-#       case "Saturn": return planets[1]
-#       case "Uranus": return planets[2]
-#       case "Mercury": return planets[3]
-#       case "Pluto": return planets[4]
-#       case "Venus": return planets[5]
-#       case "Mars": return planets[6]
-#       case "Sun": return planets[7]
-#       case "Neptune": return planets[8]
-#     }
-#   }
-
-#   function aspectSymbol(d) {
-#     switch (d) {
-#       case 0: return "☌"
-#       case 30: return "semisextile"
-#       case 60: return "sextile"
-#       case 90: return "☐"
-#       case 120: return "△"
-#       case 180: return "☍"
-#     }
-#   }
-
-#   function formatAspect(aspect) {
-#     var degree = parseInt(aspect.replace(/[a-zA-Z]+/, '').trim())
-#     var planet = aspect.replace(/\d{1,2}/, '').trim()
-#     return `${aspectSymbol(degree)} ${planetSymbol(planet)}`
-#   }
-
-#   function parse(str) {
-#     var d = str.substr(0,2),
-#         m = str.substr(3,2) - 1,
-#         y = str.substr(6,4),
-#         h = str.substr(11,2),
-#         min = str.substr(14,2);
-#     return Date.UTC(y,m,d,h,min);
-#   }
-#   const a = document.querySelector('.aspects')
-#   const chart = new DOMParser().parseFromString(a.innerText, 'text/html');
-#   const aspects = chart.getElementsByTagName('tr')
-#   const aspectBox = document.querySelector('.aspect-message')
-#  let  n = 2
-#   for (n = 2; n < aspects.length; n++) {
-#     let aspectData =  aspects[n].innerText.trim().split('\n')
-#     let now = new Date()
-#     let beginStr = aspectData[0].replace(/[A-Z]{1}[a-z]{2}/, '')
-#     let endStr = aspectData[2].replace(/[A-Z]{1}[a-z]{2}/, '')
-#     let b = parse(beginStr)
-#     let e = parse(endStr)
-#     if (now >= b && now < e) {
-#       aspectBox.innerText = `Sep. from: ${formatAspect(aspectData[1])}`
-#     }
-#   }
-
-
- #    t.datetime "begin"
- #    t.datetime "end"
- #    t.string "begin_sign"
- #    t.string "end_sign"
- #    t.datetime "created_at", null: false
- #    t.datetime "updated_at", null: false
- #    t.string "last_sep"
-
-# const cal = []
-# let group = {}
-# let row = {}
-
-# let lastEnd = 'unset'
-# let nextBegin = 'unset'
-
-# let i = 0
-#   for (i = 1; i < rows.length - 1; i++) {
-#     if (i == 1 && rows[i].innerText.match(/Moon\sEnters/)) {
-#       continue;
-#     }
-#     if (rows[i].innerText.match(/Moon\sBegins/)) {
-#       row = {}
-#       row['beginVocDate'] = rows[i].children[0].innerText
-#       row['beginVocTime'] = rows[i].children[1].innerText
-#       group['begin'] = row
-#     } else if (rows[i].innerText.match(/Moon\sEnters/)) {
-#       row = {}
-#       row['endVocDate'] = rows[i].children[0].innerText
-#       row['endVocTime'] = rows[i].children[1].innerText
-#       group['end'] = row
-#       if (Object.keys(group).length === 2) {
-#           cal.push(group)
-#           group = {}
-#       }
-#     }
-#   }
-
-#   cal.forEach((row, index) => {
-#     let beginString = row['begin']['beginVocDate'] + ' ' + row['begin']['beginVocTime'] + " UTC"
-
-#     let endString = row['end']['endVocDate'] + ' ' + row['end']['endVocTime'] + " UTC"
-#     let begin = new Date(beginString)
-#     let end = new Date(endString)
-#     let now = new Date()
-#     if (now < begin && nextBegin === 'unset' && voidBox.innerText !== 'Yup.') {
-#       nextBegin = begin
-#       voidBox.innerText = 'Nope.'
-#       document.querySelector('.next-void-message').innerText = `Moon will be void on ${formatDate(nextBegin)} local time.`
-#     }
-#   })
-#   i = cal.length - 1
-#   for (cal.length - 1; i >= 0; i--) {
-#     let beginString = cal[i]['begin']['beginVocDate'] + ' ' + cal[i]['begin']['beginVocTime'] + " UTC"
-#     let endString = cal[i]['end']['endVocDate'] + ' ' + cal[i]['end']['endVocTime'] + " UTC"
-#     let begin = new Date(beginString)
-#     let end = new Date(endString)
-#     let now = new Date()
-#     if (now > end && lastEnd === 'unset' && voidBox.innerText !== 'Yup.') {
-#       lastEnd = end
-#       voidBox.innerText = 'Nope.'
-#     }
-
-#     if (now > begin && now < end) {
-#       voidBox.innerText = 'Yup.'
-#       let d = new Date(cal[i]['begin']['beginVocDate'] + " " + cal[i]['begin']['beginVocTime'] + "+00:00")
-
-#       document.querySelector('.next-void-message').innerText = `Moon turned void on ${formatDate(d)} local time.`
-#        let e = new Date(cal[i]['end']['endVocDate'] + " " + cal[i]['end']['endVocTime'] + "+00:00")
-
-#     document.querySelector('.next-void-message').insertAdjacentHTML('afterend', `<h3>Void ends on ${formatDate(e)} local time.</h3>`)
-#     }
-
-#   }
-
