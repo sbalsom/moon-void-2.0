@@ -33,6 +33,7 @@ gem 'sidekiq-failures', '~> 1.0'
 gem 'sinatra', '>= 2.0.0.beta2', require: false
 gem 'sidekiq-status'
 gem 'redis-namespace'
+gem 'figaro'
 # js libraries
 
 # Use ActiveStorage variant
