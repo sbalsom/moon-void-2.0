@@ -1,5 +1,7 @@
 require 'nokogiri'
 require 'open-uri'
+require 'resolv-replace'
+
 
 class VoidScraper < ApplicationRecord
   def find_schedule
