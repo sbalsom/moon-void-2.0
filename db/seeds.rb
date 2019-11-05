@@ -7,3 +7,4 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 v = VoidScraper.new
 v.find_schedule
+
