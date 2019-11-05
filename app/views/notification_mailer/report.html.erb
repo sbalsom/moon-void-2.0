@@ -1,0 +1,34 @@
+<h1>Your weekly report :</h1>
+
+
+<h2>Aspects in db:</h2>
+<ul>
+<% @aspects.each do |aspect| %>
+<li>
+  <ul>
+    <li>degree: <%= aspect.degree %></li>
+    <li>planet: <%= aspect.planet %></li>
+    <li>begin: <%= aspect.begin_void %></li>
+    <li>end: <%= aspect.end_void %></li>
+  </ul>
+</li>
+<br>
+<% end %>
+</ul>
+
+<h2>Voids in db:</h2>
+<% @voids.each do |void| %>
+<li>
+  <ul>
+    <li>begin: <%= void.begin %></li>
+    <li>end: <%= void.end %></li>
+    <% if void.aspect %>
+    <li>aspect: <%= void.aspect.degree %>
+       <%= void.aspect.planet %></li>
+    <% else %>
+    <li>(no aspect)</li>
+    <% end %>
+  </ul>
+</li>
+<% end %>
+</ul>
