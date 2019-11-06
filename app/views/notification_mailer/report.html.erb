@@ -1,34 +1,66 @@
-<h1>Your weekly report :</h1>
+<style>
+  ul {
+    list-style-type: none;
+  }
 
+  .larger-li {
+    margin: 10px;
+  }
 
-<h2>Aspects in db:</h2>
-<ul>
-<% @aspects.each do |aspect| %>
-<li>
+  body {
+    font-family: sans-serif;
+  }
+</style>
+<body>
+
+  <h1>Your weekly report :</h1>
+
+  <h2>Unaspected Voids :</h2>
   <ul>
-    <li>degree: <%= aspect.degree %></li>
-    <li>planet: <%= aspect.planet %></li>
-    <li>begin: <%= aspect.begin_void %></li>
-    <li>end: <%= aspect.end_void %></li>
-  </ul>
-</li>
-<br>
-<% end %>
-</ul>
+  <% @unaspected_voids.each do |v| %>
+  <li class="larger-li">
+    <ul>
+      <li><b>begin</b>: <%= v.begin.to_formatted_s(:long_ordinal) %></li>
+      <li><b>end</b>: <%= v.end.to_formatted_s(:long_ordinal) %></li>
+    </ul>
+  </li>
 
-<h2>Voids in db:</h2>
-<% @voids.each do |void| %>
-<li>
-  <ul>
-    <li>begin: <%= void.begin %></li>
-    <li>end: <%= void.end %></li>
-    <% if void.aspect %>
-    <li>aspect: <%= void.aspect.degree %>
-       <%= void.aspect.planet %></li>
-    <% else %>
-    <li>(no aspect)</li>
-    <% end %>
+  <% end %>
   </ul>
-</li>
-<% end %>
-</ul>
+
+  <h2>Aspects recently added to the db:</h2>
+  <ul>
+  <% @aspects.each do |aspect| %>
+  <li class="larger-li">
+    <ul>
+      <li><b>degree</b>: <%= aspect.formatted_degree %></li>
+      <li><b>planet</b>: <%= aspect.formatted_planet %></li>
+      <li><b>begin</b>: <%= aspect.begin_void.to_formatted_s(:long_ordinal) %></li>
+      <li><b>end</b>: <%= aspect.end_void.to_formatted_s(:long_ordinal) %></li>
+      <li><b>updated at</b>: <%= aspect.updated_at.to_formatted_s(:long_ordinal) %></li>
+      <li><b>created at</b>: <%= aspect.created_at.to_formatted_s(:long_ordinal) %></li>
+    </ul>
+  </li>
+  <% end %>
+  </ul>
+
+  <h2>Voids recently added to the db:</h2>
+  <ul>
+  <% @voids.each do |void| %>
+  <li class="larger-li">
+    <ul>
+      <li><b>begin</b>: <%= void.begin.to_formatted_s(:long_ordinal) %></li>
+      <li><b>end</b>: <%= void.end.to_formatted_s(:long_ordinal) %></li>
+      <% if void.aspect %>
+      <li><b>aspect</b>: <%= void.aspect.degree %>
+         <%= void.aspect.planet %></li>
+      <% else %>
+      <li>(no aspect)</li>
+      <li><b>updated at</b>: <%= void.updated_at.to_formatted_s(:long_ordinal) %></li>
+      <li><b>created at</b>: <%= void.created_at.to_formatted_s(:long_ordinal) %></li>
+      <% end %>
+    </ul>
+  </li>
+  <% end %>
+  </ul>
+</body>
