@@ -11,3 +11,4 @@ class ScrapeJob < ApplicationJob
     v.find_schedule
   end
 end
+
