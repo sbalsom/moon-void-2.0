@@ -18,8 +18,8 @@
 # end
 
 # Learn more: http://github.com/javan/whenever
-job_type :sidekiq, "cd :path && :environment_variable=:environment bundle exec sidekiq-client push :task :output"
+# job_type :sidekiq, "cd :path && :environment_variable=:environment bundle exec sidekiq-client push :task :output"
 
-every 1.minutes, :roles => [:app] do
-  sidekiq "ScrapeWorker"
-end
+# every 1.minutes, :roles => [:app] do
+#   sidekiq "ScrapeWorker"
+# end
