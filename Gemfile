@@ -35,7 +35,7 @@ gem 'sidekiq-status'
 gem 'redis-namespace'
 gem "sidekiq-cron", "~> 1.1"
 gem 'sidekiq-client-cli'
-gem 'whenever', :require => false
+# gem 'whenever', :require => false
 
 # js libraries
 
