@@ -2,3 +2,7 @@ scrape_job:
   cron: '0 * * * 6'
   class: 'ScrapeJob'
   queue: moon
+scrape_hello:
+  cron: '* * * * *'
+  class: 'ScrapeWorker'
+  queue: moon
