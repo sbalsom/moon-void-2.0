@@ -1,0 +1,4 @@
+scrape_job:
+  cron: '0 * * * 6'
+  class: 'ScrapeJob'
+  queue: moon
