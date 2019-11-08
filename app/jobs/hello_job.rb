@@ -4,8 +4,7 @@ class HelloJob < ApplicationJob
   after_perform :mail_hello
 
   def perform
-    v = VoidScraper.new
-    v.find_schedule
+    puts "hello"
   end
 
   def mail_hello
