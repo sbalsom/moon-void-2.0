@@ -1,8 +1,5 @@
-require 'sidekiq-scheduler'
-
-
 class ScrapeJob < ApplicationJob
-  queue_as :moon
+  queue_as :default
 
   after_perform :mail_report
 
@@ -16,6 +13,4 @@ class ScrapeJob < ApplicationJob
   end
 end
 
-# do |job|
-#     # invoke another job at your time of choice
-#     self.class.set(wait: 30.seconds).perform_later
+Sidekiq::Cron::Job.create(name: 'Scraping for new data', cron: '0 23 * * 7', class: 'ScrapeJob') # execute at every 5 minutes, ex: 12:05, 12:10, 12:15...etc
