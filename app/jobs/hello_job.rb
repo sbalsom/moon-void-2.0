@@ -1,3 +1,5 @@
+require 'sidekiq-scheduler'
+
 class HelloJob < ApplicationJob
   queue_as :moon
 

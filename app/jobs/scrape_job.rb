@@ -1,3 +1,6 @@
+require 'sidekiq-scheduler'
+
+
 class ScrapeJob < ApplicationJob
   queue_as :moon
 

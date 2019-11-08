@@ -1,6 +1,15 @@
 :concurrency: 3
 :timeout: 100
 :verbose: true
-:queues:  # Queue priority: https://github.com/mperham/sidekiq/wiki/Advanced-Options
+:queues:
   - moon
   - mailers
+:schedule:
+  scrape_weekly:
+    cron: '0 23 * * 7'
+    class: ScrapeJob
+    queue: moon
+  say_hi:
+    cron: '0 * * * *'
+    class: HelloJob
+    queue: moon
