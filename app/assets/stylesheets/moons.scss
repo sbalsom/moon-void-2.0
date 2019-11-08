@@ -61,24 +61,47 @@ h4 {
 }
 
 @media only screen and (min-device-width : 375px) and (max-device-width : 667px) and (orientation : portrait) {
+  h3 {
+    font-size: 3rem;
+    margin: 5px;
+    margin-bottom: 50px;
+  }
 
+  h2 {
+    font-size: 10rem;
+  }
+
+  h4 {
+    font-size: 2rem;
+    margin-left: 20px;
+
+  }
   .moon-image {
     position: absolute;
     bottom: 0;
   }
-  .site-container {
-    padding:80px;
-    position: relative;
-  }
+
 }
 
 @media only screen and (min-device-width : 375px) and (max-device-width : 812px) and (-webkit-device-pixel-ratio : 3) and (orientation : landscape) {
+    h3 {
+    font-size: 3rem;
+    margin: 5px;
+    margin-bottom: 50px;
+  }
+
+  h2 {
+    font-size: 10rem;
+  }
+
+  h4 {
+    font-size: 2rem;
+    margin-left: 20px;
+
+  }
   .moon-image {
     position: absolute;
     bottom: 0;
   }
-  .site-container {
-    padding:80px;
-    position: relative;
-  }
+
 }
