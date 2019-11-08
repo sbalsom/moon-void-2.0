@@ -1,8 +1,8 @@
-scrape_job:
-  cron: '0 * * * 6'
-  class: 'ScrapeJob'
+scrape_moon:
+  cron: '0 23 * * 7'
+  class: ScrapeJob
   queue: moon
-scrape_hello:
-  cron: '* * * * *'
-  class: 'ScrapeWorker'
+say_hello:
+  cron: '0 * * * *'
+  class: HelloJob
   queue: moon

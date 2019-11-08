@@ -10,6 +10,8 @@ class MoonsController < ApplicationController
     @moon = find_moon
   end
 
+
+
   private
 
   def find_moon

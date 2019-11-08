@@ -1,11 +1,7 @@
 class ScrapeJob < ApplicationJob
   queue_as :moon
 
-  after_perform do |job|
-    # invoke another job at your time of choice
-    self.class.set(wait: 1.week).perform_later
-    mail_report
-  end
+  after_perform :mail_report
 
   def perform
     v = VoidScraper.new
@@ -16,3 +12,7 @@ class ScrapeJob < ApplicationJob
     NotificationMailer.report.deliver_now
   end
 end
+
+# do |job|
+#     # invoke another job at your time of choice
+#     self.class.set(wait: 30.seconds).perform_later
