@@ -12,4 +12,4 @@ class HelloJob < ApplicationJob
   end
 end
 
-# Sidekiq::Cron::Job.create(name: 'Saying hello as a test', cron: '*/5 * * * *', class: 'HelloJob') # execute at every 5 minutes, ex: 12:05, 12:10, 12:15...etc
+Sidekiq::Cron::Job.create(name: 'Saying hello as a test', cron: '*/5 * * * *', class: 'HelloJob') # execute at every 5 minutes, ex: 12:05, 12:10, 12:15...etc
