@@ -10,10 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_03_161837) do
+ActiveRecord::Schema.define(version: 2019_11_05_194701) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "aspects", force: :cascade do |t|
+    t.datetime "begin_void"
+    t.datetime "end_void"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "degree"
+    t.string "formatted_degree"
+    t.string "planet"
+    t.string "formatted_planet"
+  end
 
   create_table "void_scrapers", force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -27,7 +38,9 @@ ActiveRecord::Schema.define(version: 2019_11_03_161837) do
     t.string "end_sign"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "last_sep"
+    t.bigint "aspect_id"
+    t.index ["aspect_id"], name: "index_voids_on_aspect_id"
   end
 
+  add_foreign_key "voids", "aspects"
 end

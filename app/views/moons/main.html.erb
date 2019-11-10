@@ -2,13 +2,20 @@
   <h4 id="utc-text">Current UTC Offset: <span class="timezone-display"></span></h4>
   <div class="site-container">
     <h1>Is the Moon void of course ?</h1>
-    <h2 class="void-message"></h2>
-    <h3 class="next-void-message"></h3>
+    <% if @void %>
+<h2>Yup.</h2>
+<h3>Moon turned void on <%= @void.begin.strftime("%B %e at %H:%M") %> UTC</h3>
+<h3>Void period ends on <%= @void.end.strftime("%B %e at %H:%M") %> UTC</h3>
+  <% if @void.aspect %>
+  <h4>separating from : <%= @void.aspect.formatted_degree %><%= @void.aspect.formatted_planet %></h4>
+  <% end %>
+<% else %>
+<h2>Nope.</h2>
+<h3>Moon will be void on</h3>
+<% end %>
     <h3 class="sign-message">Moon is in <%= @moon %></h3>
-    <h4 class="aspect-message"></h4>
-    <div class="schedule hidden"><%= @schedule %></div>
-    </div>
-    <div class="aspects hidden"><%= @aspects %></div>
+
     <div class="moon-image" >
   </div>
 </div>
+

@@ -4,18 +4,13 @@ require 'open-uri'
 class MoonsController < ApplicationController
   def main
     @schedule = find_schedule
-    @aspects = find_aspects
+    # @aspects = find_aspects
+    # @void = Void.all.find { |v| v.begin <}
+    @void = Void.where('voids.begin <= ? and voids.end > ?', Time.now, Time.now).first
     @moon = find_moon
   end
 
   private
-
-  # def find_moon2
-  #   Moon.last
-
-  #   # sign
-  #   # degree_number
-  # end
 
   def find_moon
     moon_url = 'https://www.lunarliving.org/'
@@ -25,8 +20,6 @@ class MoonsController < ApplicationController
   end
 
   def find_schedule
-    # find_or_create_by store five day span of info and always update it on scrape
-    # then only need to scrape once a month
     void_url = 'https://www.moontracks.com/void_of_course_moon_dates.html'
     html = open(void_url)
     doc = Nokogiri::HTML(html)

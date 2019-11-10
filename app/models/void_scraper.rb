@@ -1,5 +1,6 @@
 require 'nokogiri'
 require 'open-uri'
+require 'byebug'
 
 class VoidScraper < ApplicationRecord
 
@@ -8,63 +9,148 @@ class VoidScraper < ApplicationRecord
     html = open(void_url)
     doc = Nokogiri::HTML(html)
     table = doc.search('table:contains("Void of Course Schedule")')
-    cal = parse_schedule(table)
-    make_voids(cal)
+    find_aspects
+    parse_schedule(table)
   end
 
   def parse_schedule(table)
-    #  here I could also find the last separating aspect and add it to group
-    rows = parse_rows(table)
-    group = {}
-    cal = []
-    rows.shift if rows[0][:type] == 'end'
-    rows.each do |r|
-      if r[:type] == 'begin'
-        group[:begin] = r
-      elsif r[:type] == 'end'
-        group[:end] = r
-      end
-      if group.keys.length == 2
-        cal << group
-        group = {}
-      end
-    end
-    cal
-  end
+    rows = table.search('tr')
 
-  def parse_rows(table)
-    rows = []
-    table.search('tr').each do |row|
-      void = {}
-      next if row.text =~ /Void\sof\sCourse\sSchedule/
+    rows.each_with_index do |row, index|
       next if row.text.length > 100
-      next if row.text =~ /DateUTC\s?\(\+0\)ActivitySign/
-      next unless row.text =~ /(Moon\sEnters|Moon\sBegins)/
+      next unless row.text =~ /Moon\sBegins/
 
-      void[:date] = Time.parse(row.children[0].text + row.children[1].text + " UTC")
-      void[:sign] = row.children[2].text
-      if row.text =~ /Moon\sEnters/
-        void[:type] = 'end'
-      elsif row.text =~ /Moon\sBegins/
-        void[:type] = 'begin'
-      end
-      rows << void
+      e = Time.parse(rows[index + 1].children[0].text + ' ' + rows[index + 1].children[1].text + ' UTC') if rows[index + 1]
+      es = rows[index + 1].children[3].text if rows[index + 1]
+      v = Void.find_or_create_by(
+        begin: Time.parse(row.children[0].text + ' ' + row.children[1].text + ' UTC'),
+        begin_sign: row.children[3].text
+      )
+      v.end = e
+      v.end_sign = es
+      v.aspect = Aspect.all.find { |a| a.begin_void.beginning_of_day == v.begin.beginning_of_day }
+      v.save
     end
-    rows
   end
 
-  def make_voids(cal)
-    cal.each do |group|
-      Void.find_or_create_by(
-        begin: group[:begin][:date],
-        end: group[:end][:date],
-        begin_sign: group[:begin][:sign],
-        end_sign: group[:end][:sign]
+  def find_aspects
+    aspect_url = 'https://astroelite.com/cgi-bin/dispatch.exe?rep=peph&Lng=0'
+    html = open(aspect_url)
+    doc = Nokogiri::HTML(html)
+    rows = doc.search('.Treb table:contains("Void Moon periods")').search('tr')
+    rows.each do |row|
+      next if row.text =~ /(Start|Void\sMoon\speriods)/
+
+      aspect = Aspect.find_or_create_by(
+        begin_void: Time.parse(row.search('td')[0].text + " UTC"),
+        degree: find_degree(row.search('td')[1].text),
+        formatted_degree: format_degree(find_degree(row.search('td')[1].text)),
+        planet: find_planet(row.search('td')[1].text),
+        formatted_planet: format_planet(find_planet(row.search('td')[1].text)),
+        end_void: Time.parse(row.search('td')[2].text + " UTC")
       )
     end
-    Void.all
   end
+
+  def find_degree(text)
+    text.sub(/[a-zA-Z]+/, '').strip.to_i
+  end
+
+  def find_planet(text)
+    text.sub(/\d{1,3}/, '').strip
+  end
+
+  def format_degree(degree)
+    case degree
+    when 0 then '☌'
+    when 30 then 'semisextile'
+    when 60 then 'sextile'
+    when 90 then '☐'
+    when 120 then '△'
+    when 180 then '☍'
+    end
+  end
+
+  def format_planet(planet)
+    planets = ['♃', '♄', '♅', '☿', '♇', '♀︎', '♂︎', '☉', '♆']
+    case planet
+    when 'Jupiter' then planets[0]
+    when 'Saturn' then planets[1]
+    when 'Uranus' then planets[2]
+    when 'Mercury' then planets[3]
+    when 'Pluto' then planets[4]
+    when 'Venus' then planets[5]
+    when 'Mars' then planets[6]
+    when 'Sun' then planets[7]
+    when 'Neptune' then planets[8]
+    end
+  end
+
 end
+
+# aspect[:begin_void] = Time.parse(row.search('td')[0].text + " UTC")
+      # aspect[:degree] = find_degree(row.search('td')[1].text)
+      # aspect[:formatted_degree] = format_degree(aspect[:degree])
+      # aspect[:planet] = find_planet(row.search('td')[1].text)
+      # aspect[:formatted_planet] = format_planet(aspect[:planet])
+      # aspect[:end_void] = Time.parse(row.search('td')[2].text + " UTC")
+# function planetSymbol(p) {
+#     const planets = ['♃', '♄', '♅', '☿', '♇', '♀︎', '♂︎', '☉', '♆']
+#     switch (p) {
+#       case "Jupiter": return planets[0]
+#       case "Saturn": return planets[1]
+#       case "Uranus": return planets[2]
+#       case "Mercury": return planets[3]
+#       case "Pluto": return planets[4]
+#       case "Venus": return planets[5]
+#       case "Mars": return planets[6]
+#       case "Sun": return planets[7]
+#       case "Neptune": return planets[8]
+#     }
+#   }
+
+#   function aspectSymbol(d) {
+#     switch (d) {
+#       case 0: return "☌"
+#       case 30: return "semisextile"
+#       case 60: return "sextile"
+#       case 90: return "☐"
+#       case 120: return "△"
+#       case 180: return "☍"
+#     }
+#   }
+
+#   function formatAspect(aspect) {
+#     var degree = parseInt(aspect.replace(/[a-zA-Z]+/, '').trim())
+#     var planet = aspect.replace(/\d{1,2}/, '').trim()
+#     return `${aspectSymbol(degree)} ${planetSymbol(planet)}`
+#   }
+
+#   function parse(str) {
+#     var d = str.substr(0,2),
+#         m = str.substr(3,2) - 1,
+#         y = str.substr(6,4),
+#         h = str.substr(11,2),
+#         min = str.substr(14,2);
+#     return Date.UTC(y,m,d,h,min);
+#   }
+#   const a = document.querySelector('.aspects')
+#   const chart = new DOMParser().parseFromString(a.innerText, 'text/html');
+#   const aspects = chart.getElementsByTagName('tr')
+#   const aspectBox = document.querySelector('.aspect-message')
+#  let  n = 2
+#   for (n = 2; n < aspects.length; n++) {
+#     let aspectData =  aspects[n].innerText.trim().split('\n')
+#     let now = new Date()
+#     let beginStr = aspectData[0].replace(/[A-Z]{1}[a-z]{2}/, '')
+#     let endStr = aspectData[2].replace(/[A-Z]{1}[a-z]{2}/, '')
+#     let b = parse(beginStr)
+#     let e = parse(endStr)
+#     if (now >= b && now < e) {
+#       aspectBox.innerText = `Sep. from: ${formatAspect(aspectData[1])}`
+#     }
+#   }
+
 
  #    t.datetime "begin"
  #    t.datetime "end"
@@ -139,3 +225,4 @@ end
 #     }
 
 #   }
+
