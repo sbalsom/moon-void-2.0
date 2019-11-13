@@ -1,24 +1,7 @@
-# README
+A website based on isitfridayyet.net
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+A tool for astrologers to know whether or not the moon is in a void of course period.
 
-Things you may want to cover:
+Scrapes moon schedules weekly.
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+Please report any issues to me, sbalsom@protonmail.com
