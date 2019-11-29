@@ -1,4 +1,4 @@
-class NotificationMailer < ApplicationMailer
+class PruneMailer < ApplicationMailer
   def report
     @earlest_voids = Void.all.order(:end).first(5)
     @earliest_aspects = Void.all.order(:void_end).first(5)
