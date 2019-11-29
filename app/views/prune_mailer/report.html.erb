@@ -1,0 +1,47 @@
+<style>
+  ul {
+    list-style-type: none;
+  }
+
+  .larger-li {
+    margin: 10px;
+  }
+
+  body {
+    font-family: sans-serif;
+  }
+</style>
+<body>
+
+  <h1>Your weekly report :</h1>
+
+  <h2>Earliest voids :</h2>
+  <ul>
+  <% @earliest_voids.each do |v| %>
+  <li class="larger-li">
+    <ul>
+      <li><b>begin</b>: <%= v.begin.to_formatted_s(:long_ordinal) %></li>
+      <li><b>end</b>: <%= v.end.to_formatted_s(:long_ordinal) %></li>
+    </ul>
+  </li>
+
+  <% end %>
+  </ul>
+
+  <h2>Earliest Aspects:</h2>
+  <ul>
+  <% @earliest_aspects.each do |aspect| %>
+  <li class="larger-li">
+    <ul>
+      <li><b>degree</b>: <%= aspect.formatted_degree %></li>
+      <li><b>planet</b>: <%= aspect.formatted_planet %></li>
+      <li><b>begin</b>: <%= aspect.begin_void.to_formatted_s(:long_ordinal) %></li>
+      <li><b>end</b>: <%= aspect.end_void.to_formatted_s(:long_ordinal) %></li>
+      <li><b>updated at</b>: <%= aspect.updated_at.to_formatted_s(:long_ordinal) %></li>
+      <li><b>created at</b>: <%= aspect.created_at.to_formatted_s(:long_ordinal) %></li>
+    </ul>
+  </li>
+  <% end %>
+  </ul>
+
+</body>
