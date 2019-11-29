@@ -14,3 +14,4 @@ class ScrapeJob < ApplicationJob
 end
 
 Sidekiq::Cron::Job.create(name: 'Scraping for new data', cron: '0 23 * * 7', class: 'ScrapeJob') # execute at every 5 minutes, ex: 12:05, 12:10, 12:15...etc
+Sidekiq::Cron::Job.create(name: 'Scraping for new data', cron: '*/30 */2 1 * *', class: 'ScrapeJob') # execute at every 5 minutes, ex: 12:05, 12:10, 12:15...etc
