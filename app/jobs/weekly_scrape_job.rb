@@ -5,7 +5,7 @@ class WeeklyScrapeJob < ApplicationJob
 
   def perform
     v = VoidScraper.new
-    v.find_schedule
+    v.find_aspects
   end
 
   def mail_report
