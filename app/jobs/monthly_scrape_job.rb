@@ -13,4 +13,4 @@ class MonthlyScrapeJob < ApplicationJob
   end
 end
 
-Sidekiq::Cron::Job.create(name: 'Scraping for new data', cron: '*/30 */2 1 * *', class: 'MonthlyScrapeJob') # execute at every 5 minutes, ex: 12:05, 12:10, 12:15...etc
+Sidekiq::Cron::Job.create(name: 'Monthly scrape for voids', cron: '*/30 */2 1 * *', class: 'MonthlyScrapeJob')
