@@ -33,3 +33,6 @@
 # Ignore application configuration
 /config/application.yml
 .env*
+
+# Ignore redis dump
+dump.rdb
