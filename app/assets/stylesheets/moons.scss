@@ -58,6 +58,7 @@ h4 {
   width: 100vw;
   background-position:top;
   background-repeat: no-repeat;
+  z-index: -30;
 }
 
 @media only screen and (max-device-width : 667px) and (orientation : portrait) {
