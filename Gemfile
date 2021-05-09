@@ -5,7 +5,7 @@ ruby '2.6.3'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 # gem 'rails', '~> 5.2.3'
-gem 'rails', ' 6.0.2.2'
+gem 'rails', ' >=6.0.3.5'
 # Use sqlite3 as the database for Active Record
 # Use Puma as the app server
 gem "puma", ">= 3.12.4"
@@ -25,7 +25,7 @@ gem 'jbuilder', '~> 2.5'
 # gem 'redis', '~> 4.0'
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
-gem 'pg', '~> 0.18.4'
+gem 'pg'
 
 # devise for sidekiq login
 gem 'devise'

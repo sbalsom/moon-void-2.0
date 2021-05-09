@@ -36,3 +36,4 @@
 
 # Ignore redis dump
 dump.rdb
+vendor/bundle
